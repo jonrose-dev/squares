@@ -8,31 +8,39 @@ const itemNumber = ({ rowIdx, sqrt, colIdx }) => rowOffset({ rowIdx, sqrt }) + c
 const isEmptyItem = ({ colIdx, itemCount, sqrt, rowIdx }) => itemNumber({ rowIdx, sqrt, colIdx }) > itemCount;
 const fillArray = (count) => [...Array(count).keys()];
 
+
+const Grid = ({ itemCount }) => {
+  const sqrt = Math.ceil(Math.sqrt(itemCount));
+  const arr = fillArray(sqrt);
+  return (
+    <div className="container">
+      {arr.map((rowIdx) => (
+        <div className={classNames('row', { empty: isEmptyRow({ rowIdx, itemCount, sqrt }) })} key={`row${rowIdx}`}>
+          {arr.map((colIdx) => 
+            isEmptyItem({ colIdx, itemCount, sqrt, rowIdx }) ? (
+              <div key={`col${colIdx}`} className="placeholder" />
+            ) : (
+              <div key={`col${colIdx}`} className="item">
+                item {itemNumber({ rowIdx, sqrt, colIdx })}
+              </div>
+            ))
+          }
+        </div>
+      ))}
+  </div>
+  )
+}
+
 export const App = () => {
-  const [itemCount, setItemCount] = useState(3);
-  const sqrt = itemCount > 2 ? Math.ceil(Math.sqrt(itemCount)) : 1;
-  const columnCount = sqrt < 2 ? itemCount : sqrt;
+  const [itemCount, setItemCount] = useState(1);
+
   const onChange = (e) => setItemCount(Number(e.target.value));
 
   return (
     <div>
       <label htmlFor="number">Number of items</label>
       <input value={itemCount} onChange={onChange} id="number" type="number" />
-      <div className="container">
-        {fillArray(sqrt).map((rowIdx) => (
-            <div className={classNames('row', { empty: isEmptyRow({ rowIdx, itemCount, sqrt }) })} key={`row${rowIdx}`}>
-              {fillArray(columnCount).map((colIdx) => 
-                isEmptyItem({ colIdx, itemCount, sqrt, rowIdx }) ? (
-                  <div key={`col${colIdx}`} className="placeholder" />
-                ) : (
-                  <div key={`col${colIdx}`} className="item">
-                    item {itemNumber({ rowIdx, sqrt, colIdx })}
-                  </div>
-                ))
-              }
-            </div>
-          ))}
-      </div>
+      <Grid itemCount={itemCount} />
     </div>
   );
 }
