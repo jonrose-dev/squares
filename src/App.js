@@ -18,7 +18,7 @@ const Grid = ({ itemCount }) => {
         <div className={classNames('row', { empty: isEmptyRow({ rowIdx, itemCount, sqrt }) })} key={`row${rowIdx}`}>
           {arr.map((colIdx) => 
             isEmptyItem({ colIdx, itemCount, sqrt, rowIdx }) ? (
-              <div key={`col${colIdx}`} className="placeholder" />
+              <div key={`col${colIdx}`} className="item placeholder" />
             ) : (
               <div key={`col${colIdx}`} className="item">
                 item {itemNumber({ rowIdx, sqrt, colIdx })}

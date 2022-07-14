@@ -8,24 +8,27 @@ body {
 .container {
   height: 60vh;
   width: 80vw;
-  display: grid;
-  grid-template-rows: repeat(auto-fit, minmax(1px, 1fr));
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
-
 .row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+  display: flex;
+  gap: 4px;
+  height: 100%;
 }
 
 .item {
+  box-sizing: border-box;
   padding: 4px;
-  margin: 2px;
+  height: 100%;
+  width: 100%;
   border: 1px solid black;
 }
 
 .placeholder {
-  visibility: hidden;
+  border: 1px solid transparent;
 }
 
 .empty {
